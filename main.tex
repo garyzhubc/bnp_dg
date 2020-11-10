@@ -1,0 +1,62 @@
+\documentclass[letterpaper]{article}
+\usepackage{uai2020}
+\usepackage[margin=1in]{geometry}
+
+\usepackage[sort&compress,numbers]{natbib}
+
+\usepackage{times}
+
+\usepackage[autonum]{tchdr}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\newcommand{\tre}{\cdots}
+\newcommand{\Qexp}{\mcQ^\text{exp}}
+\newcommand{\Qfull}{\mcQ^\text{full}}
+\newcommand{\kgibbs}{K^\text{Gibbs}}
+\newcommand{\kbgibbs}{K^\text{blockGibbs}}
+\newcommand{\todo}{\textcolor{red}{\text{continue???}}}
+
+
+\title{On the Geometry of  Completely Random Measure Mixture Models}
+
+\author{ 
+{\{\bf{Boyan Beronov} \quad \bf {Christian Weilbach}\} \qquad \bf {Peiyuan Zhu}}  \\
+\qquad\qquad Department of Computer Science  \qquad Department of Statistics \\
+University of British Columbia\\
+Vancouver, BC V6T 1Z4 \\
+}
+
+\begin{document}
+
+\maketitle
+\section{Introduction}
+
+\section{Background}
+The generative model with Dirichlet process with concentration parameter $\alpha$ and base distribution $H$ as prior and likelihood function $f$ can be written as follows:
+\[
+	\Theta&=\sum_{k=1}^\infty\theta_k\delta_{\psi_k}\dist\distDP\left(\alpha,H\right)\cr
+	Y_n&\dist f\left(\cdot|\Theta\right)
+\]
+
+Define the statistical manifold of the mixture families: 
+\[
+	\mcM=\left\{m(y,\Theta)=f(y|\Theta)P(\Theta):\Theta=\sum_{k=1}^\infty\theta_k\delta_{\psi_k},\theta\in\triangle\right\}
+\] where $\triangle$ is an infinite-dimensional simplex and $f$ is the mixture density: $f(y|\theta,\psi)=\sum_{k=1}^\infty\theta_kf(y|\psi_k)$ and $P(\Theta)=\distGEM(d\theta)H(\psi)$ where GEM stands for  Griffiths, Engen and McCloske stick-breaking distribution \cite{pitman02}. Define information metric on this manifold as the Kullback-Leibler divergence. A truncation method defines path $\gamma(t)$ for $K=\lfloor t\rfloor$ between two densities $m,m'$ in which $\theta=(\theta_1,\theta_2,\dots,\theta_K,0,0,\cdots)$. The truncation introduced by \cite{rasmussen00} defines the path having approximating prior $(\theta_1,\cdots,\theta_K)\dist\distDir\left(\frac{\alpha}{K},\cdots,\frac{\alpha}{K}\right)$ whereas the truncation introduced by \cite{pitman02} defines a path by applying change of coordinate transformation $(\theta_1,\cdots,\theta_K)=T(v_1,\cdots,v_K)=(v_1,(1-v_1)v_2,\cdots,(1-v_1)v_K)$ in which independent distribution $v_K\distiid\distBeta(1,\alpha)$ was obtained by neutrality. 
+
+This framework works similarly for the normalized completely random measure models. Previous work synthesized truncation of normalized completely random measures as TFAs \cite{campbell19} and IFAs  by \cite{nguyen20} for the exponential families scoped by \cite{broderick18}. The generative model with normalized completely random measure with rate measure $\nu$ and base distribution $H$ as prior and likelihood function $f$ can be written as follows:
+\[
+\Theta&=\sum_{k=1}^\infty\theta_k\delta_{\psi_k}\dist\distNCRM\left(\nu,H\right)\cr
+Y_n&\dist f\left(\cdot|\Theta\right)
+\]
+
+In our formalization, both IFAs and TFAs define path by applying normalizing transformation $(\theta_1,\cdots,\theta_K)=T(v_1,\cdots,v_K)=\left(\frac{v_1}{\sum_{k=1}^Kv_k},\cdots,\frac{v_K}{\sum_{k=1}^Kv_k}\right)$ where $(v_1,\cdots,v_K)\dist\distPP\left(\nu_K(\cdot)\right)$ for truncated rate measure. Under TFAs $\nu_K$ is the rate measure of the sequential generative process with and IFAs $\nu_K=\theta^{-1+cK^{-1}-dSb_K(\theta-a K^{-1}-d)}g(\theta)^{cK^{-1}-d}h(\theta;\theta)Z_K^{-1}d\theta$ for $\nu(d\theta;d,\eta)=\alpha\theta^{-1-d}g(\theta)^{-d}\frac{h(\theta;\eta)}{Z(1-d,\eta)}d\theta$ where $d$ is the discount parameter, $Z$ is the normalizing , $\alpha$ as the mass parameter, and $g,h,Z$ being respective parameterization functions of the rate measure.
+
+{
+\small
+\bibliographystyle{unsrtnat}
+\bibliography{sources}
+}
+
+\appendix
+\end{document}
+\typeout{get arXiv to do 4 passes: Label(s) may have changed. Rerun}
