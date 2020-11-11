@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage[autonum]{tchdr}
+\usepackage{amsmath, amsfonts, graphicx, float, color, tikz, listings, amsthm}
+\usetikzlibrary{bayesnet}
+\title{On the geometry of normalized completely random measures}
+\newcommand{\tre}{\cdots}
+\newcommand{\Qexp}{\mcQ^\text{exp}}
+\newcommand{\Qfull}{\mcQ^\text{full}}
+\newcommand{\kgibbs}{K^\text{Gibbs}}
+\newcommand{\kbgibbs}{K^\text{blockGibbs}}
+\newcommand{\ytest}{y_\text{test}}
+\newcommand{\ytrain}{y_\text{train}}
+\newcommand{\xtest}{x_\text{test}}
+\newcommand{\xtrain}{x_\text{train}}
+\newcommand{\todo}[1]{\textcolor{red}{#1}}
+\makeatletter
+\newcommand*\dashline{\rotatebox[origin=c]{90}{$\dabar@\dabar@\dabar@$}}
+\author{Peiyuan Zhu}
+\begin{document}
+	\maketitle
+	\section{Background}
+	Generative model with normalized random measure as prior and likelihood $h$:
+	\[
+		\Theta&=\sum_{k=1}^\infty\theta_k\delta_{\psi_k}\dist\distRM\left(\nu,H\right)\cr
+		Y_n&\dist f\left(\cdot|\Theta\right)
+	\]
+	Let $\psi_!,\psi_2,\cdots$ be a countable sequence of component distributions. Define $\mcM=\left\{f_{\theta.\psi}(y)):\theta\in\triangle\right\}$ where $\triangle$ is an infinite-dimensional simplex and $f$ is the mixture density:
+	\[
+		f_{\theta,\psi}(y)=\sum_k\theta_kf(y|\psi_k)
+	\]
+	Truncation approximates 
+	\[
+		\Theta\approx\Theta_K=\sum_{k=1}^K\theta_k\delta_{\psi_k}
+	\]
+\end{document}
