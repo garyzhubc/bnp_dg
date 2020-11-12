@@ -17,7 +17,7 @@
 \newcommand{\todo}{\textcolor{red}{\text{continue???}}}
 
 
-\title{On the Geometry of  Completely Random Measure Mixture Models}
+\title{On Truncation of  Completely Random Measure Mixture Models}
 
 \author{ 
 {\{\bf{Boyan Beronov} \quad \bf {Christian Weilbach}\} \qquad \bf {Peiyuan Zhu}}  \\
@@ -32,24 +32,27 @@ Vancouver, BC V6T 1Z4 \\
 \section{Introduction}
 
 \section{Background}
-The generative mixture model with Dirichlet process with concentration parameter $\alpha$ and base distribution $H$ as prior and likelihood function $f$ can be written as follows:
+In trait allocation models, it is common use unnormalized completely random measure as prior.  The generative model with likelihood $f$ and unnormalized completely random measure with rate measure $\nu$ and base distribution $H$ as prior can be written as:
 \[
-\Theta&=\sum_{k=1}^\infty\theta_k\delta_{\psi_k}\dist\distDP\left(\alpha,H\right)\cr
-Y_n&\dist f\left(\cdot|\Theta\right)
+\Theta&=\sum_k\theta_k\delta_{\psi_k}\dist\distCRM(\nu,H)\cr
+X_n&\distiid\distLP(h,\Theta)\cr
+Y_n|X_n&\distind f(\cdot|X_n)\label{eq:crm}
+\]
+where $X_n$ captures to what extend data $n$ exhibit each trait and $Y_n$ is the data. In clustering, it is common to use normalized completely random measure as prior. The generative model with likelihood $f$ and normalized completely random measure with rate measure $\nu$ and base distribution $H$ as prior can be written as:
+\[
+	\Theta&=\sum_k\theta_k\delta_{\psi_k}\dist\distCRM(\nu,H)\cr
+	\Xi&=\frac{\Theta}{\Theta(\Psi)}\cr
+	X_n&\distiid\Xi\cr
+	Y_n|X_n&\distind f(\cdot|X_n)\label{eq:ncrm}
+\]
+where $X_n$ is the cluster assignment variable and $Y_n$ is the data. 
+
+We define space of marginal likelihood i.e. integrating out $\Theta$ as the information manifold:
+\[
+	\mcM=\left\{\EE\left[\prod_{n=1}^Nf(y_n|X_n)\right]:\text{ for }y\in\cup_\psi\supp(f(\cdot|\psi))\right\}
 \]
 
-In our framework, we define the statistical manifold of the mixture families as: 
-\[
-\mcM=\left\{m(y,\Theta)=f(y|\Theta)p(\Theta):\Theta=\sum_{k=1}^\infty\theta_k\delta_{\psi_k},\theta\in\triangle\right\}
-\] where $\triangle$ is an infinite-dimensional simplex, $f$ is the mixture density  $f(y|\theta,\psi)=\sum_{k=1}^\infty\theta_kf(y|\psi_k)$, and $P(d\Theta)=\distGEM(d\theta)H(\psi)$ where GEM stands for  Griffiths, Engen and McCloske stick-breaking distribution \cite{pitman02}. Define information metric on this manifold as the Kullback-Leibler divergence. A truncation method defines path $\gamma(t)$ for $K=\lfloor t\rfloor$ between two densities $m,m'$ in which $\theta=(\theta_1,\theta_2,\dots,\theta_K,0,0,\cdots)$. The truncation using the scaling limit of a Dirichlet distribution introduced by \cite{rasmussen00} defines the path having approximating prior $(\theta_1,\cdots,\theta_K)\dist\distDir\left(\frac{\alpha}{K},\cdots,\frac{\alpha}{K}\right)$ whereas the truncation introduced using the stick-breaking construction by \cite{pitman02} defines a path by applying change of coordinate transformation $(\theta_1,\cdots,\theta_K)=T(v_1,\cdots,v_K)=(v_1,(1-v_1)v_2,\cdots,(1-v_1)v_K)$ to the independently distributed $v_K\distiid\distBeta(1,\alpha)$. The independence of $v_1,\cdots,v_K$ can be obtained by the neutrality property \cite{connor69} of the Dirichlet random vector. 
-
-Our framework works similarly for the normalized completely random measure models. Previous works synthesized truncation of normalized completely random measures as Truncated Finite Approximations (TFAs) \cite{campbell19} and Independent Finite Approximations (IFAs) \cite{nguyen20} for the exponential families scoped by \cite{broderick18}. The generative mixture model with a normalized completely random measure as prior with rate measure $\nu$, base distribution $H$, and likelihood function $f$ can be written as follows:
-\[
-\Theta&=\sum_{k=1}^\infty\theta_k\delta_{\psi_k}\dist\distNCRM\left(\nu,H\right)\cr
-Y_n&\dist f\left(\cdot|\Theta\right)
-\]
-
-In our formalization, each of IFAs and TFAs defines a path by applying normalizing transformation $(\theta_1,\cdots,\theta_K)=T(v_1,\cdots,v_K)=\left(\frac{v_1}{\sum_{k=1}^Kv_k},\cdots,\frac{v_K}{\sum_{k=1}^Kv_k}\right)$ where $(v_1,\cdots,v_K)\dist\distPP\left(\nu_K(\cdot)\right)$ for truncated rate measure $\nu_K$. Under TFAs $\nu_K$ is the rate measure of the sequential generative process with and IFAs $\nu_K=\theta^{-1+cK^{-1}-dSb_K(\theta-a K^{-1}-d)}g(\theta)^{cK^{-1}-d}h(\theta;\eta)Z_K^{-1}d\theta$ for $\nu(d\theta;d,\eta)=\zeta\theta^{-1-d}g(\theta)^{-d}\frac{h(\theta;\eta)}{Z(1-d,\eta)}d\theta$ where $d$ is the discount parameter, $Z$ is the normalizing  constant, $\zeta$ is the mass parameter, and $g,h,Z$ are the functions that parameterizes the rate measure.
+Let the marginal likelihood of the infinite model be $p_{N,\infty}$ and the marginal likelihood of the truncated model at level $K$ be $p_{N,K}$. \cite{nguyen20} and \cite{campbell19} derived error bounds in total variation norm on different truncation methods. 
 
 {
 \small
