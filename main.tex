@@ -75,18 +75,18 @@ the truncated rate measure $\nu(K,\beta_0)$ equals:
 	\nu(K,\beta_0)=\frac{\theta^{\frac{c}{K}-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)}{Z\left(\frac{c}{K}-1,\beta_0\right)}
 \] 
 
-The series representation synthesized by \cite{campbell19} uses the exact rate measure $\nu_{\beta(K,\beta_0)}=\nu_{\beta_0}$ but conditionally generate auxiliary variables $\xi_k|\xi_{k-1}$ for a given ordering of the atoms and set $\theta_k=\tau(\xi_k)$ with a transformation $\tau$. In particular for series representation $\xi_k=(V_k,\Gamma_k)$ where $V_k$ follows independent marking distribution $V_k\distiid G$ and $\Gamma_k$ is the unit-rate Poisson process on the positive real line $\Gamma_k=\sum_{l=1}^kE_l,E_l\distiid\distExp(1)$. The superposition representation synthesized by \cite{campbell19} simulates independent $\theta_{k,1},\theta_{k,2},\cdots,\theta_{k,C_k}\distiid\nu_{\beta(K,\beta_0)}$ for a given ordering of the sub-measures so  that $\nu_{\beta_0}=\sum_{k=1}^\infty\nu_{\beta(K,\beta_0)}$ and therefore the generative model becomes $\Theta_K=\sum_{k=1}^K\sum_{i=1}^{C_k}\theta_{ki}\delta_{\psi_{ki}}$ in \ref{eqn:trunc}. This method of truncation is inefficient in inference \cite{zhu20,nguyen20} so we do not consider it in our framework here. 
+The series representation synthesized by \cite{campbell19} uses the exact rate measure $\nu_{\beta(K,\beta_0)}=\nu_{\beta_0}$ but conditionally generate auxiliary variables $\xi_k|\xi_{k-1}$ for a given ordering of the atoms and set $\theta_k=\tau(\xi_k)$ with a transformation $\tau$. In particular for series representation $\xi_k=(V_k,\Gamma_k)$ where $V_k$ follows independent marking distribution $V_k\distiid G$ and $\Gamma_k$ is the unit-rate Poisson process on the positive real line $\Gamma_k=\sum_{l=1}^kE_l,E_l\distiid\distExp(1)$. The superposition representation synthesized by \cite{campbell19} simulates independent $\theta_{k,1},\theta_{k,2},\cdots,\theta_{k,C_k}\distiid\nu_{\beta(K,\beta_0)}$ for a given ordering of the sub-measures so  that $\nu_{\beta_0}=\sum_{k=1}^\infty C_{\beta(k,\beta_0)}\nu_k$ for some deterministic function $C$. Therefore the generative model becomes $\Theta_K=\sum_{k=1}^K\sum_{i=1}^{C_k}\theta_{ki}\delta_{\psi_{ki}}$ in \ref{eqn:trunc}. This method of truncation is inefficient in inference \cite{zhu20,nguyen20} so we do not consider it in our framework here. 
 
 \section{The information geometry of truncation}
 
-Define the manifold $\mcM_{(\beta,k)\in\reals^D\times\nats}=\bigcup_k M_{\beta\in\reals^D,k}$ as the space of  joint distributions of $Y,X,\Theta$ induced by rate measure $\nu_\beta$ and truncation level $k$. This manifold is equipped with with chart $\mcM\rightarrow\reals^D\times\nats$.  For a truncation level $K$, the Riemannian manifold $\mcM_{\beta\in\reals^D,k}$ is naturally endowed with the Fisher information metric:
+Define the manifold $M_{\beta\in\reals^D,k}$ as the space of  marginal likelihood induced by rate measure $\nu_\beta$ and truncation level $k$ equipped with with chart $\mcM\rightarrow\reals^D\times\nats$. We let $\mcM_{(\beta,k)\in\reals^D\times\nats}=\bigcup_k M_{\beta\in\reals^D,k}$ as union of the manifolds for all truncation levels. For a truncation level $K$, the Riemannian manifold $\mcM_{\beta\in\reals^D,k}$ is naturally endowed with the Fisher information metric:
 \[
-	G_K(\beta)=\int\grad_\beta\log p_{\beta,K}(y)\grad_\beta\log p_{\beta,K}(y)^Tp_{\beta,k}(y)dy
+	G_K(\beta)=\int\grad_\beta\log p_{\beta,K}(y)\grad_\beta\log p_{\beta,K}(y)^Tp_{\beta,L}(y)dy
 \]
 
-For any differentiable curve $\gamma:[0,1]\rightarrow\mcM_k$ this metric defines a notion of path length:
+For any differentiable curve $\gamma:[0,1]\rightarrow\mcM_K$ this metric defines a notion of path length:
 \[
-	L_k(\gamma)=\int_0^1\sqrt{\frac{d\gamma(t)^T}{dt}G_K(\gamma(t))\frac{d\gamma(t)}{dt}}dt
+	L_K(\gamma)=\int_0^1\sqrt{\frac{d\gamma(t)^T}{dt}G_K(\gamma(t))\frac{d\gamma(t)}{dt}}dt
 \]
 
 
