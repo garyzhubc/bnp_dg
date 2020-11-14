@@ -55,14 +55,14 @@ for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\b
 
 \section{The information geometry of truncation}
 
-Define the manifold $\mcM_{(\beta,k)\in\reals^D\times\nats}$ as the space of  joint distributions of $Y,X,\Theta$ induced by rate measure $\nu_\beta$ and truncation level $K$ with chart $\mcM\rightarrow\reals^D\times\nats$.  For a given $K$, the Riemannian manifold $\mcM_{\beta\in\reals^D,k}$ is naturally endowed with the Fisher information metric:
+Define the manifold $\mcM_{(\beta,k)\in\reals^D\times\nats}=\bigcup_k M_{\beta\in\reals^D,k}$ as the space of  joint distributions of $Y,X,\Theta$ induced by rate measure $\nu_\beta$ and truncation level $k$. This manifold is equipped with with chart $\mcM\rightarrow\reals^D\times\nats$.  For a truncation level $K$, the Riemannian manifold $\mcM_{\beta\in\reals^D,k}$ is naturally endowed with the Fisher information metric:
 \[
-	G_k(\beta)=\int\grad_\beta\log p_{\beta,k}(y)\grad_\beta\log p_{\beta,k}(y)^Tp_{\beta,k}(y)dy
+	G_K(\beta)=\int\grad_\beta\log p_{\beta,K}(y)\grad_\beta\log p_{\beta,K}(y)^Tp_{\beta,k}(y)dy
 \]
 
 For any differentiable curve $\gamma:[0,1]\rightarrow\mcM_k$ this metric defines a notion of path length:
 \[
-	L_k(\gamma)=\int_0^1\sqrt{\frac{d\gamma(t)^T}{dt}G_k(\gamma(t))\frac{d\gamma(t)}{dt}}dt
+	L_k(\gamma)=\int_0^1\sqrt{\frac{d\gamma(t)^T}{dt}G_K(\gamma(t))\frac{d\gamma(t)}{dt}}dt
 \]
 
 
