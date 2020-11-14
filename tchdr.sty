@@ -114,9 +114,11 @@
 %%% Important Sets %%%
 %%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\reals}{\ensuremath{\mathbb{R}}}
+\newcommand{\preals}{\ensuremath{\mathbb{R}^+}}
 \newcommand{\ints}{\ensuremath{\mathbb{Z}}}
 \newcommand{\rats}{\ensuremath{\mathbb{Q}}}
 \newcommand{\nats}{\ensuremath{\mathbb{N}}}
+\newcommand{\pints}{\ensuremath{\mathbb{Z}^+}}
 \newcommand{\comps}{\ensuremath{\mathbb{C}}}
 
 
@@ -276,7 +278,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Information Theory %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\kl}[2]{\mathrm{D_{KL}}\left(#1 || #2\right)}
+\newcommand{\ttv}[2]{\mathrm{D_{TV}}\left(#1 , #2\right)}
+\newcommand{\tvn}[2]{\mathrm{D_{rate}}\left(#1 , #2 \right)}
+\newcommand{\kl}[2]{\mathrm{D_{KL}}\left(#1 ,  #2\right)}
 \newcommand{\ent}[1]{\mathcal{H}\left(#1\right)}
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -785,7 +789,7 @@
 \newcommand{\hj}{\hat{j}}
 \newcommand{\hk}{\hat{k}}
 \newcommand{\hl}{\hat{l}}
-%\newcommand{\hm}{\hat{m}}
+\newcommand{\hmm}{\hat{m}}
 \newcommand{\hn}{\hat{n}}
 \newcommand{\ho}{\hat{o}}
 \newcommand{\hp}{\hat{p}}
