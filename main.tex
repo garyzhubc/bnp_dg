@@ -57,7 +57,7 @@ for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\b
 \]
 for deterministic function $C$; \cite{nguyen20} the function $B$ equals:
 \[
-	B(K,\beta_0)=\frac{C_1+C_2\ln^2N+C_3\ln Nln K}{K}.
+	B(K,\beta_0)=\frac{C_1(\beta_0)+C_2(\beta_0)\ln^2N+C_3(\beta_0)\ln N\ln K}{K}.
 \]
 for constants $C_1,C_2,C_3$ depending on $\beta_0$. \cite{nguyen20} also provided a lower bound on the truncation error. The independent finite representation synthesized by \cite{nguyen20} uses $\nu_{\beta(K,\beta_0)}$ from the exponential family \cite{broderick18} with mass parameter $\gamma'$, log-partition function $A(\theta)$, and natural parameter $\mu(\theta)$ 
 \[
@@ -72,7 +72,7 @@ to independently generate $\theta_1,\theta_2,\cdots,\theta_K\distiid\nu_{\beta(K
 \] 
 the truncated rate measure $\nu(K,\beta_0)$ equals:
 \[
-	\nu(K,\beta)=\frac{\theta^{\frac{c}{K}-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)}{Z\left(\frac{c}{K}-1,\beta_0\right)}
+	\nu(K,\beta_0)=\frac{\theta^{\frac{c}{K}-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)}{Z\left(\frac{c}{K}-1,\beta_0\right)}
 \] 
 
 The series representation synthesized by \cite{campbell19} uses the exact rate measure $\nu_{\beta(K,\beta_0)}=\nu_{\beta_0}$ but conditionally generate auxiliary variables $\xi_k|\xi_{k-1}$ for a given ordering of the atoms and set $\theta_k=\tau(\xi_k)$ with a transformation $\tau$. In particular for series representation $\xi_k=(V_k,\Gamma_k)$ where $V_k$ follows independent marking distribution $V_k\distiid G$ and $\Gamma_k$ is the unit-rate Poisson process on the positive real line $\Gamma_k=\sum_{l=1}^kE_l,E_l\distiid\distExp(1)$. The superposition representation synthesized by \cite{campbell19} simulates independent $\theta_{k,1},\theta_{k,2},\cdots,\theta_{k,C_k}\distiid\nu_{\beta(K,\beta_0)}$ for a given ordering of the sub-measures so  that $\nu_{\beta_0}=\sum_{k=1}^\infty\nu_{\beta(K,\beta_0)}$ and therefore the generative model becomes $\Theta_K=\sum_{k=1}^K\sum_{i=1}^{C_k}\theta_{ki}\delta_{\psi_{ki}}$ in \ref{eqn:trunc}. This method of truncation is inefficient in inference \cite{zhu20,nguyen20} so we do not consider it in our framework here. 
