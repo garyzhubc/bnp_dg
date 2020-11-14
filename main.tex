@@ -51,7 +51,20 @@ Let $\beta_0$ be the parameter of the completely random measure that we want to 
 \[
 	\sup_A\left|p_{\beta(K,\beta_0),K}(A)-p_{\beta_0,\infty}(A)\right|\le B(K,\beta_0)
 \]
-for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\beta_0)$. The independent finite representation synthesized by \cite{nguyen20} uses $\nu_{\beta(K,\beta_0)}$ from a generalized exponential family \cite{broderick18} to independently generate $\theta_1,\theta_2,\cdots,\theta_K\distiid\nu_{\beta(K,\beta_0)}(\cdot)$ and $\beta(K)$ is a parameter choice for truncation level  $K$. The series representation synthesized by \cite{campbell19} uses the exact rate measure $\nu_{\beta(K,\beta_0)}=\nu$ but conditionally generate auxiliary variables $\xi_k|\xi_{k-1}$ for a given ordering of the atoms and set $\theta_k=\kappa(\xi_k)$ with a transformation $\kappa$. The superposition representation synthesized by \cite{campbell19} simulates independent $\theta_{k,1},\theta_{k,2},\cdots,\theta_{k,C_k}\distiid\nu_{\beta(K,\beta_0)}$ for a given ordering of the sub-measures so the generative model becomes $\Theta_K=\sum_{k=1}^K\sum_{i=1}^{C_k}\theta_{ki}\delta_{\psi_{ki}}$ in \ref{eqn:trunc}. This method of truncation is inefficient in inference \cite{zhu20,nguyen20} so we do not consider it in our framework here. 
+for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\beta_0)$. The independent finite representation synthesized by \cite{nguyen20} uses $\nu_{\beta(K,\beta_0)}$ from the exponential family \cite{broderick18} with mass parameter $\gamma'$, log-partition function $A(\theta)$, and natural parameter $\mu(\theta)$ 
+\[
+	\nu_{\beta(K,\beta_0)}=\gamma'\beta_0^{-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)
+\]
+to independently generate $\theta_1,\theta_2,\cdots,\theta_K\distiid\nu_{\beta(K,\beta_0)}(\cdot)$.  For mass parameter $c=\gamma'\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)$ and the normalizing constant:
+\[
+	S(\xi,\beta_0)=\int\theta^\xi\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)d\theta,
+\] 
+the truncated rate measure $\nu(K,\beta_0)$ equals:
+\[
+	\nu(K,\beta)=\frac{\theta^{\frac{c}{K}-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)}{Z\left(\frac{c}{K}-1,\beta_0\right)}
+\] 
+
+The series representation synthesized by \cite{campbell19} uses the exact rate measure $\nu_{\beta(K,\beta_0)}=\nu$ but conditionally generate auxiliary variables $\xi_k|\xi_{k-1}$ for a given ordering of the atoms and set $\theta_k=\kappa(\xi_k)$ with a transformation $\kappa$. The superposition representation synthesized by \cite{campbell19} simulates independent $\theta_{k,1},\theta_{k,2},\cdots,\theta_{k,C_k}\distiid\nu_{\beta(K,\beta_0)}$ for a given ordering of the sub-measures so the generative model becomes $\Theta_K=\sum_{k=1}^K\sum_{i=1}^{C_k}\theta_{ki}\delta_{\psi_{ki}}$ in \ref{eqn:trunc}. This method of truncation is inefficient in inference \cite{zhu20,nguyen20} so we do not consider it in our framework here. 
 
 \section{The information geometry of truncation}
 
