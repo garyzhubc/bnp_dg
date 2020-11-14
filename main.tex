@@ -47,11 +47,19 @@ Now we consider a generative model that unifies the notation of  \cite{nguyen20,
 	&Y_n|X_n\distind f(\cdot|X_n)\label{eqn:trunc}
 \]
 
-Let $\beta_0$ be the parameter of the completely random measure that we want to simulate. Both truncation methods provided error bounds in the total variation norm between the marginal likelihood $p_{\beta(K,\beta_0),K}$ and $p_{\beta_0,\infty}$ as:
+Let $\beta_0$ be the parameter of the completely random measure that we want to simulate. Both \cite{campbell19,nguyen20} provided error bounds in the total variation norm between the marginal likelihood $p_{\beta(K,\beta_0),K}$ and $p_{\beta_0,\infty}$ as:
 \[
 	\sup_A\left|p_{\beta(K,\beta_0),K}(A)-p_{\beta_0,\infty}(A)\right|\le B(K,\beta_0)
 \]
-for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\beta_0)$. The independent finite representation synthesized by \cite{nguyen20} uses $\nu_{\beta(K,\beta_0)}$ from the exponential family \cite{broderick18} with mass parameter $\gamma'$, log-partition function $A(\theta)$, and natural parameter $\mu(\theta)$ 
+for some function $B(K,\beta_0)$ and smooth parametrization function $\beta(K,\beta_0)$. For \cite{campbell19} the function $b$ equals:
+\[
+	B(K,\beta_0)=1-C(K,\beta_0)^K
+\]
+for deterministic function $C$; \cite{nguyen20} the function $B$ equals:
+\[
+	B(K,\beta_0)=\frac{C_1+C_2\ln^2N+C_3\ln Nln K}{K}.
+\]
+for constants $C_1,C_2,C_3$ depending on $\beta_0$. \cite{nguyen20} also provided a lower bound on the truncation error. The independent finite representation synthesized by \cite{nguyen20} uses $\nu_{\beta(K,\beta_0)}$ from the exponential family \cite{broderick18} with mass parameter $\gamma'$, log-partition function $A(\theta)$, and natural parameter $\mu(\theta)$ 
 \[
 	\nu_{\beta(K,\beta_0)}=\gamma'\beta_0^{-1}\exp\left(\left<\beta_0,\left(\mu(\theta),-A(\theta)\right)^T\right>\right)
 \]
