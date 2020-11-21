@@ -1,0 +1,201 @@
+\documentclass{article}
+\usepackage[autonum]{tchdr}
+\usepackage{amsmath, amsfonts, graphicx, float, color, tikz, listings, amsthm}
+\usetikzlibrary{bayesnet}
+\title{Note of Information Geometry Method}
+\newcommand{\tre}{\cdots}
+\newcommand{\Qexp}{\mcQ^\text{exp}}
+\newcommand{\Qfull}{\mcQ^\text{full}}
+\newcommand{\kgibbs}{K^\text{Gibbs}}
+\newcommand{\kbgibbs}{K^\text{blockGibbs}}
+\newcommand{\ytest}{y_\text{test}}
+\newcommand{\ytrain}{y_\text{train}}
+\newcommand{\xtest}{x_\text{test}}
+\newcommand{\xtrain}{x_\text{train}}
+\newcommand{\todo}[1]{\text{\textcolor{red}{#1}}}
+\makeatletter
+\newcommand*\dashline{\rotatebox[origin=c]{90}{$\dabar@\dabar@\dabar@$}}
+\author{Peiyuan Zhu}
+\begin{document}
+	\maketitle
+	\section{How to read}
+	\begin{enumerate}
+		\item Based on book 'Methods of Information Geometry' by Arami
+		\item If a reference is not immediately making sense, then it's an indication that the reference isn't completely understood. The next goal then is to understand that reference
+		\item The theory can be accompained by learning specific examples.
+		\item \url{http://www.robots.ox.ac.uk/~lsgs/posts/2019-09-27-info-geom.html}
+		\item \url{https://bjlkeng.github.io/posts/tensors-tensors-tensors/}
+		\item \url{https://wiseodd.github.io/techblog/2019/02/22/riemannian-geometry/}
+		\item \url{https://people.math.ethz.ch/~salamon/PREPRINTS/diffgeo.pdf}
+		\item Typing is very time-consuming and in general unnecessary. Instead, I would listen to the mac assistant reading the passages to me while I try to figure out every step of the derivation. 
+	\end{enumerate}
+	\section{Differentiable manifolds}
+	\begin{enumerate}
+		\item $S,Q$ manifold
+		\item $n,m$ dimension of manifold
+		\item $\psi,\varphi$ chart. ; $S=\{p_\xi=p(x;\xi)|\xi=[\xi^1,\cdots,\xi^n]\in\Xi\}$. For example
+		\begin{enumerate}
+			\item $S=\reals^n$
+			\item $S=S^1,\phi(p)=\frac{x}{1-y},\varphi(p)=\frac{x}{1+y}$
+			\item $S=S^n,\phi(p)=\frac{x}{1-z},\varphi(p)=\frac{x}{1+z}$
+			\item $S=\left\{\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),[\mu,\sigma]\in\reals\times\preals\right\}$
+			\item $S=\left\{p_\xi=p(x;\xi)|\xi=[\xi^1,\cdots,\xi^n]\in\Xi\right\}$
+		\end{enumerate}
+		\item Coordinate transformation from $\psi$ to $\varphi$ \[\psi\circ\varphi^{-1}\qquad(1.1)\] For example 
+		\item Motivation: To consider $S$ as a manifold means that one is interested in investigating those properties of $S$ which are invariant under coordinate transformations. In particular, differential geometry analyzes the geometry of objects using differ- ential operators with respect to a variety of functions on $S$, and it would be problematic if these operators depended fundamentally on the choice of coordi- nates. Hence it is necessary to restrict the coordinate systems to those which allow smooth transformations between each other.
+		\item $C^\infty$ sufficiently smooth
+		\item $C^\infty$-differmorphism: \[\psi\circ\varphi^{-1}\cr\psi^{-1}\circ\varphi\]are both $C^\infty$
+		\item $\xi^i,\rho^i$ i-th coordinate map of $\psi,\varphi$\[\xi^i(p)=\xi^i\in\reals\cr\rho^i(p)=\rho^i\in\reals\]
+		\item $\xi,\rho$ coordinate map of $\psi,\varphi$
+		\[\phi=[\xi^i]\in\reals^n\cr\psi=[\rho^i]\in\reals^n\]
+		\item Surrogate of $f$ \[\barf\defined f\circ\varphi^{-1}\]
+		\item Partial derivative of $f$ \[\D{f}{\xi^i}\defined\D{\barf}{\xi^i}\circ\varphi\] 
+		\item Higher order partial derivative of $f$ \[\frac{\partial^2f}{\partial\xi^j\partial\xi^i}=\frac{\partial}{\partial\xi^j}\frac{\partial f}{\partial\xi^i}\]
+		\item $\mcF(S)=\{f:S\rightarrow\reals:f\in C^\infty(S)\}$ an algebra of differentiable functions
+		\item  \[\sum_{j=1}^n\D{\xi^i}{\rho^j}\D{\rho^j}{\xi^k}=\sum_{j=1}^n\D{\rho^i}{\xi^j}\D{\xi^j}{\rho^k}=\delta_k^i\qquad(1.2)\] 
+		or in Einstein summation \[\D{\xi^i}{\rho^j}\D{\rho^j}{\xi^k}=\D{\rho^i}{\xi^j}\D{\xi^j}{\rho^k}=\delta_k^i\cr\]
+		\item  For $f\in\mcF$: \[\D{f}{\rho^j}&=\sum_{i=1}^n\D{\xi^i}{\rho^j}\D{f}{\xi^i}\cr\D{f}{\xi^j}&=\sum_{i=1}^n\D{\rho^i}{\xi^j}\D{f}{\rho^i}\qquad(1.3)\]
+		or in Einstein summation
+		\[\D{f}{\rho^j}&=\D{\xi^i}{\rho^j}\D{f}{\xi^i}\cr\D{f}{\xi^j}&=\D{\rho^i}{\xi^j}\D{f}{\rho^i}\]
+	\end{enumerate}
+	\section{Tangent vectors and tangent spaces}
+	\begin{enumerate}
+		\item $\gamma:I\rightarrow S$ a function
+		\item $\gamma^i(t)\defined\xi^i(\gamma(t))$
+		\item Surrogate of $\gamma$: $\bar{\gamma}\defined[\gamma^1(t),\cdots,\gamma^n(t)]$
+		\item $\gamma$ is a $C^\infty$ curve if $\bar{\gamma}$ is $C^\infty$ 
+		\item Motivation: if we define tangent vector at $p$ such that $\gamma(a)=p$ as:
+		\[\left(\der{\gamma}{t}\right)_p\equivalentto\dotgamma(a)=\lim_{h\rightarrow0}\frac{\gamma(a+h)-\gamma(a)}{h}\qquad(1.4)\]
+		the `subtraction' in the numerator may not be meaningful on manifold that is not a real line. 
+		\item Idea: But we can differentiate any real-valued function on the manifold along curve $\gamma$ by $\der{}{t}f(\gamma(t))$. 
+		\item For $f\in\mcF$ we have $f(\gamma(t))=\barf(\bar{\gamma}(t))=\barf(\gamma^1(t),\cdots,\gamma^n(t)))$ in coordinate $\xi$. So by chain rule: 
+		\[\der{}{t}f(\gamma(t))=\left(\D{\barf}{\xi^i}\right)_{\bar{\gamma}(t)}\der{\gamma^i(t)}{t}=\left(\D{f}{\xi^i}\right)_{\gamma(t)}\der{\gamma^i(t)}{t}\qquad(1.5)\]
+		\item Define tangent vector at $p$ as the directional derivative operator along $\gamma$:
+		\[\left(\der{\gamma}{t}\right)_p\equivalentto\dotgamma(a):f\mapsto\der{}{t}f(\gamma(t))|_{t=a}\] 
+		\item By evaluating $\gamma$ at $a$ (1.5) becomes:
+		\[
+			\left(\der{\gamma}{t}\right)_p=\dotgamma(a)=\dotgamma^i(a)\left(\D{}{\xi^i}\right)_p\qquad(1.6)
+		\]
+		where notation $\dotgamma(a)=\der{}{t}\gamma^i(t)|_{t=a}$ is used to simplify the equation and is a rescaling of the operator $\left(\D{}{\xi^i}\right)_p:f\mapsto\left(\D{f}{\xi^i}\right)_p$.
+		\item Therefore $\left(\D{f}{\xi^i}\right)_p$ is also the basis tangent vector $e_i$ that goes through point $p$ and is parallel to the $i$-th coordinate curve
+		\item When the manifoldis the real (1.6) is equivalent to to (1.4)
+		\item Tangent space $T_p(S)=\left\{c_i\left(\D{}{\xi^i}\right)_p|[c^1,\cdots,c^n]\in\reals^n\right\}$. For example
+		\begin{enumerate}
+			\item Tangent space of graph of a differentiable function $f:\reals\rightarrow\reals$, $S=\graph f$ at $p=(x,y)$ \[T_p(S)=\left\{\left(p,\lambda\cdot\begin{pmatrix}1\cr f'(x)\end{pmatrix}\right):\lambda\in\reals\right\}\]
+			\item Tangent space of the sphere $T_p(S^n)=\left\{p'\in\reals^{n+1}|\langle p',p\rangle=0\right\}$
+			\item Tangent space of the quadratic form $S=\{p\in\reals^k|p^TAp=c\}$ \[T_p(S)=\{p'\in\reals^k|p^TAp'=0\}\]
+		\end{enumerate}
+		\item $\left(\D{}{\xi^i}\right)_p$ is also the natural basis of the tangent space. 
+		\item 
+	\end{enumerate}
+	\section{Vector fields}
+	\begin{enumerate}
+		\item $X_p\in T_p(S)$ a tangent vector
+		\item $X:p\mapsto X_p$ a vector field. For example dy
+		\begin{enumerate}
+			\item $X(x,y)=(x,-y)$ on $\reals^2$
+			\item Perpendicular vector fields $X(p)=c\times p,Y(p)=(c\times p)\times p$ on $S^2$ for constant vector $c$
+			\item Gradient of $f\in\mcF$
+			\item  Coordinate fields formed by natural basis:
+			\[\partial_i\defined\left(\D{}{\xi^i}\right):p\mapsto \left(\D{}{\xi^i}\right)_p\cr\tilde{\partial}_j\defined\left(\D{}{\rho^j}\right):p\mapsto \left(\D{}{\rho^j}\right)_p\]
+		\end{enumerate}
+		\item Motivation: Since for vector field $X$ and every $p$ there are $n$ real numbers $\{X_p^1,\dots,X_p^n\}$ that uniquely determine $X_p=X_p^i(\partial_i)_p$ we can write \[X=X^i\partial_i=\tX^j\tilde{\partial}_j\] 
+		\item Component vector field $X$ with respect to $[\xi^i],[\rho^j]$ 
+		\[X^i:p\mapsto X^i_p\cr\tX^j:p\mapsto X^j_p\] 
+		\item A $C^\infty$  vector field is a vector field whose components are $C^\infty$ with respect to some (therefore all by smooth change of coordinate) coordinate system. 
+		\item $\mathcal{T}\defined\{X:X\text{ is a }C^\infty\text{ vector field}\}$ has closure under addition and multiplication by scalar or elements from $\mcF$ i.e. smooth functions on this manifold
+	\end{enumerate}
+	\section{Tensor fields}
+	\begin{enumerate}
+		\item A map $F:V_1\times V_2\times\cdots\times V_r\rightarrow W$ where $V_1,\cdots,V_r,W$ are linear spaces is a multilinear map if it is linear in each component. 
+		\item Families of multilinearmaps
+		\[&[T_p]_r^0\defined
+			\{F:\underbrace{T_p\times\cdots\times T_p}_{r \text{ times}}\rightarrow \reals,F\text{ is multilinear}\}\cr
+			&[T_p]_r^1\defined\{F:\underbrace{T_p\times\cdots\times T_p}_{r \text{ times}}\rightarrow T_p,F\text{ is multilinear}\}
+		\]
+		\item $A:p\mapsto A_p\in[T_p]_r^q$ is the tensor field of type $(q,r)$ where $q$ is the contravariant degree and $r$ is the covariant degree. 
+		\item $X_1,\cdots,X_r$ are vector fields
+		\item $A(X_1,\cdots,X_r):p\mapsto A_p((X_1)_p,\cdots,(X_r)_p)$
+		\item $A:(X_1,\cdots,X_r)\mapsto A(X_1,\cdots,X_r)$
+		\item $A$ acting on the basis gives components of  $A$ with respect to $[\xi^i]$
+		\[&A(\partial_{i_1},\cdots,\partial_{i_r})=A_{i_1\cdots i_r}\cr &A(\partial_{i_1},\cdots,\partial_{i_r})=A_{i_1\cdots i_r}^k\partial_k
+		\]
+		so that for vector fields $X_1,\cdots,X_r$ \[&A(X_1,\cdots,X_r)=A_{i_1\cdots i_r}X_1^{i_1}\cdots X_r^{i_r}\cr &A(X_1,\cdots,X_r)=A_{i_1\cdots i_r}^kX_1^{i_1}\cdots X_r^{i_r}\partial_k\]
+		respectively
+		\item Change coordinate to $[\rho^j]$ get
+		\[&\tilde{A}_{j_1,\cdots,j_r}=A_{i_1,\cdots,i_r}\left(D{\xi^{i_1}}{\rho^{j_1}}\right)\left(D{\xi^{i_r}}{\rho^{j_r}}\right)&(1.15)\cr
+		&\tilde{A}_{j_1,\cdots,j_r}^l=A_{i_1,\cdots,i_r}^k\left(D{\xi^{i_1}}{\rho^{j_1}}\right)\left(D{\xi^{i_r}}{\rho^{j_r}}\right)\left(\D{\rho^l}{\xi^k}\right)&(1.16)\]
+	\end{enumerate}
+	\section{Submanifolds}
+	\begin{enumerate}
+		\item $M\subset S$
+		\item $n,m$ dimension of $S,M$
+		\item Coordinate systems for $S,M$: \[[\xi^i]=[\xi^1,\cdots,\xi^n]\cr[u^a]=[u^1,\cdots,u^n]\]
+		\item $M$ is a submnaifold of $S$ if:
+		\begin{enumerate}
+			\item $\xi^i|_M\in\mcF$ of each $\xi^i$
+			\item $B_a^i\defined\left(\D{\xi^i}{u^a}\right)_p$ are linearly independent in $a$
+			\item For every $W$ there exists open subset $U$ such that $W=M\cap U$
+		\end{enumerate}
+		(a) implies embedding $\iota(p)=p$ is $C^\infty$ and (b) implies  $\left(d\iota\right)_p$ is nondegenerate at $p$. For example
+		\begin{enumerate}
+			\item An open subset of $S$
+			\item For $m<n$, define $M\defined\left\{p\in S|\xi^i(p)=c^i,m+1\le i\le n\right\}$ and $u^a\defined\xi^a|M$ for $1\le a\le m$. Note one can also construct supermanifolds with open subsets.
+		\end{enumerate}
+		\item $\gamma:t\mapsto\gamma(t)$
+		\item Using two coordinate systems
+		\[&\gamma^a\defined u^a\circ\gamma\cr&\gamma^i\defined\xi^i\circ\gamma\]
+		 the tangent vector of $\gamma$ is in both spaces i.e.
+		 \[&\left(\der{\gamma^a}{t}\right)_p\left(\partial_a\right)_p\in T_p(M)\cr&\left(\der{\gamma^i}{t}\right)_p\left(\partial_i\right)_p\in T_p(S)\]
+		\item By independence condition \[\left(\der{\gamma^i}{t}\right)_p=\left(\D{\xi^i}{u^a}\right)_p\left(\D{\gamma^a}{t}\right)_p\]
+		implies one-to-one correspondence between these tangent vectors given by $d\iota$ of embedding $\iota:M\rightarrow S$. So $T_p(M)$ is a subspace of $T_p(S)$. 
+		\item Therefore \[\left(\D{}{u^a}\right)_p=\left(\D{\xi^i}{u^a}\right)_p\left(\D{}{\xi^i}\right)_p=B_a^i\partial_i\qquad(1.18)\]
+		implies $B_a^i$ is the natural basis vector $\partial_a$ of $M$ with respect to coordinate system $[u^a]$ seen as a vector in $T_p(S)$. 
+	\end{enumerate}
+	\section{Riemannian metrics}
+	\begin{enumerate}
+		\item An inner product is a bilinear form that is also symmetric and positive-definite
+		\item $\langle,\rangle_p$ an inner product on the tangent space $T_p(S)$
+		\item $g_{ij}=\langle\partial_i,\partial_j\rangle$ is in $\mcF$ such that as the tensor field of covariant degree 2 and contravariant degree 1
+		\item $[\xi_i][\rho^k]$ coordinate systems
+		 \[\partial_i\defined\D{}{\xi^i}\cr\tilde{\partial}_k\defined\D{}{\rho^k}\]
+		\item The components of $g$ are determined by $g_{ij}=\langle\partial_i,\partial_j\rangle\in C^\infty$ that maps $g:p\mapsto\langle\left(\partial_i\right)_p,\left(\partial_j\right)_p\rangle_p$ 
+		\item For any two tangent vectors \[&D=D^i(\partial_i)_p\cr &D'=D'^i(\partial_i)_p\] in $T_p$ their inner product can be written as $\langle D,D'\rangle_p=g_{ij}(p)D^iD^j$ 
+		\item This defines norm fo every tangent vector $D$ as \[\|D\|^2=\langle D,D\rangle_p=g_{ij}(p)D^iD^j\]
+		\item $G(p)=[g_{ij}(p)]$ $\tg_{kl}=\langle\tilde{\partial}_k,\tilde{\partial_l}\rangle$
+		\[&\tg_{kl}=g_{ij}\left(\D{\xi^i}{\rho^k}\right)\left(\D{\xi^j}{\rho^l}\right)&g_{ij}=\tg_{kl}\left(\D{\rho^k}{\xi^i}\right)\left(\D{\rho^l}{\xi^j}\right)\cr& \tg^{kl}=g^{ij}\left(\D{\rho^k}{\xi^i}\right)\left(\D{\rho^l}{\xi^j}\right)&g^{ij}=\tg^{kl}\left(\D{\xi^i}{\rho^k}\right)\left(\D{\xi^j}{\rho^l}\right)\]
+		\item $\tG(p)^{-1}=[\tg^{kl}(p)]$ \[\tg^{kl}=g^{ij}\left(\D{\rho^k}{\xi^i}\right)\left(\D{\rho^l}{\xi^j}\right)\cr g^{ij}=\tg^{kl}\left(\D{\xi^i}{\rho^k}\right)\left(\D{\xi^j}{\rho^l}\right)\]
+		\item We also have identity \[g_{ij}g^{jk}=\delta_i^k=\begin{cases}1&k=i\cr0&\ne i\end{cases}\]
+		\item For a curve $\gamma:[a,b]\rightarrow S$ the length of the curve is defined by \[\|\gamma\|\defined\int_a^b\left\|\der{\gamma}{t}\right\|dt=\int_a^b\sqrt{g_{ij}\dot\gamma^i\dot\gamma^j}dt\]
+		where $\dot\gamma^i$ is the derivative of $\gamma^i\defined\xi^i\circ\gamma$
+	\end{enumerate}
+	\section{Affine connections}
+	\begin{enumerate}
+		\item Motivation: For $S$ an open set $\reals^n$, there is natural correspondence between $T_p,T_q$ for $p,q\in S$. However, this may not be the case for arbitrary $S$
+		\item 
+	\end{enumerate}
+	\section{Covariant derivatives}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	\section{Flatness}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	\section{Autoparallel submanifolds}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	\section{Projections of connections}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	\section{Embedding curvature}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+	\section{Riemannian connection}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+\end{document}
